@@ -17,6 +17,7 @@ namespace Dotclear\Plugin\feedEntries;
 use dcCore;
 use dcNsProcess;
 use http;
+use html;
 
 class Frontend extends dcNsProcess
 {
@@ -54,6 +55,13 @@ class Frontend extends dcNsProcess
         return true;
     }
 
+    /**
+     * Start a feed block
+     * <tpl:Feed source="url"></tpl:Feed>
+     *
+     * Attribute(s) :
+     * - source = URL of the feed to fetch and render (required)
+     */
     public static function Feed($attr, $content)
     {
         if (empty($attr['source'])) {
@@ -183,7 +191,7 @@ class Frontend extends dcNsProcess
 
         if (isset($attr['extended'])) {
             $sign = (bool) $attr['extended'] ? '' : '!';
-            $if[] = $sign . 'dcFeedEntries::isExtended()';
+            $if[] = $sign . self::class . '::isExtended()';
         }
 
         if (!empty($if)) {
@@ -273,7 +281,7 @@ class Frontend extends dcNsProcess
     {
         $f = dcCore::app()->tpl->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'dcFeedEntries::getExcerpt()') . '; ?>';
+        return '<?php echo ' . sprintf($f, self::class . '::getExcerpt()') . '; ?>';
     }
 
     /**
@@ -305,17 +313,7 @@ class Frontend extends dcNsProcess
 
         return '<?php echo ' . sprintf($f, 'dt::str("' . $fmt . '",dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->TS,dcCore::app()->blog->settings->system->blog_timezone)') . '; ?>';
     }
-}
 
-class dcFeedEntries
-{
-    /**
-     * Get an excerpt from a feed entry.
-     * Returns the "description" property as is if available, or a filtered version of the "content" property.
-     * By "filtered" we mean clean from any HTML markup.
-     *
-     * @return	string	The text to be used as an excerpt
-     */
     public static function getExcerpt()
     {
         if (!dcCore::app()->ctx->feed || is_null(dcCore::app()->ctx->feed_idx)) {
@@ -329,11 +327,6 @@ class dcFeedEntries
         return html::clean(dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->content);
     }
 
-    /**
-     * Check if the current feed entry has a non-empty description property
-     *
-     * @return	boolean	True if the "description" property isn't empty, false elsewise
-     */
     public static function isExtended()
     {
         if (!dcCore::app()->ctx->feed || is_null(dcCore::app()->ctx->feed_idx)) {
