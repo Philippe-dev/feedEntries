@@ -17,7 +17,7 @@ $this->registerModule(
     'feedEntries',
     'Integrate feed entries in your templates',
     'Pep',
-    '2.0',
+    '2.1',
     [
         'requires'    => [['core', '2.25']],
         'permissions' => dcCore::app()->auth->makePermissions([dcAuth::PERMISSION_CONTENT_ADMIN]),

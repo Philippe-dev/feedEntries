@@ -16,8 +16,7 @@ namespace Dotclear\Plugin\feedEntries;
 
 use dcCore;
 use dcNsProcess;
-use http;
-use html;
+use Dotclear\Helper\Html\Html;
 
 class Frontend extends dcNsProcess
 {
@@ -208,7 +207,7 @@ class Frontend extends dcNsProcess
     public static function FeedEntryIfFirst($attr)
     {
         $ret = $attr['return'] ?? 'first';
-        $ret = html::escapeHTML($ret);
+        $ret = Html::escapeHTML($ret);
 
         return
         '<?php if (dcCore::app()->ctx->feed_idx == 0) { ' .
@@ -222,7 +221,7 @@ class Frontend extends dcNsProcess
     public static function FeedEntryIfOdd($attr)
     {
         $ret = $attr['return'] ?? 'odd';
-        $ret = html::escapeHTML($ret);
+        $ret = Html::escapeHTML($ret);
 
         return
         '<?php if ((dcCore::app()->ctx->feed_idx+1)%2 == 1) { ' .
@@ -324,7 +323,7 @@ class Frontend extends dcNsProcess
             return dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->description;
         }
 
-        return html::clean(dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->content);
+        return Html::clean(dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->content);
     }
 
     public static function isExtended()
