@@ -17,6 +17,7 @@ namespace Dotclear\Plugin\feedEntries;
 use dcCore;
 use dcNsProcess;
 use Dotclear\Helper\Html\Html;
+use Dotclear\Helper\Network\Http;
 
 class Frontend extends dcNsProcess
 {
@@ -68,7 +69,7 @@ class Frontend extends dcNsProcess
         }
 
         if (strpos($attr['source'], '/') === 0) {
-            $attr['source'] = http::getHost() . $attr['source'];
+            $attr['source'] = Http::getHost() . $attr['source'];
         }
 
         return
