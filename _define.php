@@ -19,7 +19,7 @@ $this->registerModule(
     'Pep',
     '2.1',
     [
-        'requires'    => [['core', '2.25']],
+        'requires'    => [['core', '2.26']],
         'permissions' => dcCore::app()->auth->makePermissions([dcAuth::PERMISSION_CONTENT_ADMIN]),
         'type'        => 'plugin',
         'support'     => 'https://github.com/Philippe-dev/feedEntries',
