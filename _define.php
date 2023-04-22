@@ -20,9 +20,11 @@ $this->registerModule(
     '2.1',
     [
         'requires'    => [['core', '2.26']],
-        'permissions' => dcCore::app()->auth->makePermissions([dcAuth::PERMISSION_CONTENT_ADMIN]),
-        'type'        => 'plugin',
-        'support'     => 'https://github.com/Philippe-dev/feedEntries',
-        'details'     => 'https://plugins.dotaddict.org/dc2/details/feedEntries',
+        'permissions' => dcCore::app()->auth->makePermissions([
+            dcAuth::PERMISSION_USAGE,
+            dcAuth::PERMISSION_CONTENT_ADMIN,
+        ]),
+        'type'     => 'plugin',
+        'support'    => 'https://github.com/Philippe-dev/feedEntries',
     ]
 );
