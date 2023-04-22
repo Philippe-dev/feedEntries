@@ -75,7 +75,7 @@ class Frontend extends dcNsProcess
 
         return
             '<?php' . "\n" .
-            'dcCore::app()->ctx->feed = Dotclear\Helper\Network\Feed\Reader::quickParse("' . $attr['source'] . '",DC_TPL_CACHE); ' . "\n" .
+            'dcCore::app()->ctx->feed = ' . Reader::class . '::quickParse("' . $attr['source'] . '",DC_TPL_CACHE); ' . "\n" .
             'if (dcCore::app()->ctx->feed !== null) : ?>' . "\n" .
             $content . "\n" .
             '<?php unset(dcCore::app()->ctx->feed); ' . "\n" .
