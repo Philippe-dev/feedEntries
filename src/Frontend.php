@@ -18,6 +18,7 @@ use dcCore;
 use dcNsProcess;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Network\Http;
+use Dotclear\Helper\Network\Feed\Reader;
 
 class Frontend extends dcNsProcess
 {
@@ -74,7 +75,7 @@ class Frontend extends dcNsProcess
 
         return
             '<?php' . "\n" .
-            'dcCore::app()->ctx->feed = feedReader::quickParse("' . $attr['source'] . '",DC_TPL_CACHE); ' . "\n" .
+            'dcCore::app()->ctx->feed = Dotclear\Helper\Network\Feed\Reader::quickParse("' . $attr['source'] . '",DC_TPL_CACHE); ' . "\n" .
             'if (dcCore::app()->ctx->feed !== null) : ?>' . "\n" .
             $content . "\n" .
             '<?php unset(dcCore::app()->ctx->feed); ' . "\n" .
