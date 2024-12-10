@@ -16,10 +16,7 @@ $this->registerModule(
     '2.4',
     [
         'requires'    => [['core', '2.26']],
-        'permissions' => dcCore::app()->auth->makePermissions([
-            dcAuth::PERMISSION_USAGE,
-            dcAuth::PERMISSION_CONTENT_ADMIN,
-        ]),
+        'permissions' => 'My',
         'type'    => 'plugin',
         'support' => 'https://github.com/Philippe-dev/feedEntries',
     ]
