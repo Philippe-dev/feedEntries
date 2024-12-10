@@ -13,7 +13,7 @@ $this->registerModule(
     'feedEntries',
     'Integrate feed entries in your templates',
     'Pep',
-    '2.3',
+    '2.4',
     [
         'requires'    => [['core', '2.26']],
         'permissions' => dcCore::app()->auth->makePermissions([

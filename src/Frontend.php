@@ -310,7 +310,7 @@ class Frontend extends Process
         }
         $f = dcCore::app()->tpl->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'dt::str("' . $fmt . '",dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->TS,dcCore::app()->blog->settings->system->blog_timezone)') . '; ?>';
+        return '<?php echo ' . sprintf($f, 'Dotclear\Helper\Date::str("' . $fmt . '",dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->TS,dcCore::app()->blog->settings->system->blog_timezone)') . '; ?>';
     }
 
     public static function getExcerpt()
