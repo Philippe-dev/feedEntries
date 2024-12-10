@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\feedEntries;
 
-use dcCore;
+use Dotclear\App;
 use Dotclear\Core\Process;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Network\Http;
@@ -33,23 +33,23 @@ class Frontend extends Process
             return false;
         }
 
-        dcCore::app()->tpl->addBlock('Feed', [self::class, 'Feed']);
-        dcCore::app()->tpl->addValue('FeedTitle', [self::class, 'FeedTitle']);
-        dcCore::app()->tpl->addValue('FeedURL', [self::class, 'FeedURL']);
-        dcCore::app()->tpl->addValue('FeedDescription', [self::class, 'FeedDescription']);
-        dcCore::app()->tpl->addBlock('FeedEntries', [self::class, 'FeedEntries']);
-        dcCore::app()->tpl->addBlock('FeedEntriesHeader', [self::class, 'FeedEntriesHeader']);
-        dcCore::app()->tpl->addBlock('FeedEntriesFooter', [self::class, 'FeedEntriesFooter']);
-        dcCore::app()->tpl->addBlock('FeedEntryIf', [self::class, 'FeedEntryIf']);
-        dcCore::app()->tpl->addValue('FeedEntryIfFirst', [self::class, 'FeedEntryIfFirst']);
-        dcCore::app()->tpl->addValue('FeedEntryIfOdd', [self::class, 'FeedEntryIfOdd']);
-        dcCore::app()->tpl->addValue('FeedEntryTitle', [self::class, 'FeedEntryTitle']);
-        dcCore::app()->tpl->addValue('FeedEntryURL', [self::class, 'FeedEntryURL']);
-        dcCore::app()->tpl->addValue('FeedEntryAuthor', [self::class, 'FeedEntryAuthor']);
-        dcCore::app()->tpl->addValue('FeedEntrySummary', [self::class, 'FeedEntrySummary']);
-        dcCore::app()->tpl->addValue('FeedEntryExcerpt', [self::class, 'FeedEntryExcerpt']);
-        dcCore::app()->tpl->addValue('FeedEntryContent', [self::class, 'FeedEntryContent']);
-        dcCore::app()->tpl->addValue('FeedEntryPubdate', [self::class, 'FeedEntryPubdate']);
+        App::frontend()->template()->addBlock('Feed', [self::class, 'Feed']);
+        App::frontend()->template()->addValue('FeedTitle', [self::class, 'FeedTitle']);
+        App::frontend()->template()->addValue('FeedURL', [self::class, 'FeedURL']);
+        App::frontend()->template()->addValue('FeedDescription', [self::class, 'FeedDescription']);
+        App::frontend()->template()->addBlock('FeedEntries', [self::class, 'FeedEntries']);
+        App::frontend()->template()->addBlock('FeedEntriesHeader', [self::class, 'FeedEntriesHeader']);
+        App::frontend()->template()->addBlock('FeedEntriesFooter', [self::class, 'FeedEntriesFooter']);
+        App::frontend()->template()->addBlock('FeedEntryIf', [self::class, 'FeedEntryIf']);
+        App::frontend()->template()->addValue('FeedEntryIfFirst', [self::class, 'FeedEntryIfFirst']);
+        App::frontend()->template()->addValue('FeedEntryIfOdd', [self::class, 'FeedEntryIfOdd']);
+        App::frontend()->template()->addValue('FeedEntryTitle', [self::class, 'FeedEntryTitle']);
+        App::frontend()->template()->addValue('FeedEntryURL', [self::class, 'FeedEntryURL']);
+        App::frontend()->template()->addValue('FeedEntryAuthor', [self::class, 'FeedEntryAuthor']);
+        App::frontend()->template()->addValue('FeedEntrySummary', [self::class, 'FeedEntrySummary']);
+        App::frontend()->template()->addValue('FeedEntryExcerpt', [self::class, 'FeedEntryExcerpt']);
+        App::frontend()->template()->addValue('FeedEntryContent', [self::class, 'FeedEntryContent']);
+        App::frontend()->template()->addValue('FeedEntryPubdate', [self::class, 'FeedEntryPubdate']);
 
         return true;
     }
@@ -73,10 +73,10 @@ class Frontend extends Process
 
         return
             '<?php' . "\n" .
-            'dcCore::app()->ctx->feed = ' . Reader::class . '::quickParse("' . $attr['source'] . '",DC_TPL_CACHE); ' . "\n" .
-            'if (dcCore::app()->ctx->feed !== null) : ?>' . "\n" .
+            'App::frontend()->context()->feed = ' . Reader::class . '::quickParse("' . $attr['source'] . '",DC_TPL_CACHE); ' . "\n" .
+            'if (App::frontend()->context()->feed !== null) : ?>' . "\n" .
             $content . "\n" .
-            '<?php unset(dcCore::app()->ctx->feed); ' . "\n" .
+            '<?php unset(App::frontend()->context()->feed); ' . "\n" .
             'endif; ?>' . "\n";
     }
 
@@ -86,9 +86,9 @@ class Frontend extends Process
      */
     public static function FeedTitle($attr)
     {
-        $f = dcCore::app()->tpl->getFilters($attr);
+        $f = App::frontend()->template()->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'dcCore::app()->ctx->feed->title') . '; ?>';
+        return '<?php echo ' . sprintf($f, 'App::frontend()->context()->feed->title') . '; ?>';
     }
 
     /**
@@ -97,9 +97,9 @@ class Frontend extends Process
      */
     public static function FeedURL($attr)
     {
-        $f = dcCore::app()->tpl->getFilters($attr);
+        $f = App::frontend()->template()->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'dcCore::app()->ctx->feed->link') . '; ?>';
+        return '<?php echo ' . sprintf($f, 'App::frontend()->context()->feed->link') . '; ?>';
     }
 
     /**
@@ -108,9 +108,9 @@ class Frontend extends Process
      */
     public static function FeedDescription($attr)
     {
-        $f = dcCore::app()->tpl->getFilters($attr);
+        $f = App::frontend()->template()->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'dcCore::app()->ctx->feed->description') . '; ?>';
+        return '<?php echo ' . sprintf($f, 'App::frontend()->context()->feed->description') . '; ?>';
     }
 
     /**
@@ -129,12 +129,12 @@ class Frontend extends Process
 
         return
             '<?php' . "\n" .
-            'if (count(dcCore::app()->ctx->feed->items)) : ' . "\n" .
-            '$nb_feed_items = min(count(dcCore::app()->ctx->feed->items),' . $lastn . ');' . "\n" .
-            'for (dcCore::app()->ctx->feed_idx = 0; dcCore::app()->ctx->feed_idx < $nb_feed_items; dcCore::app()->ctx->feed_idx++) : ?>' . "\n" .
+            'if (count(App::frontend()->context()->feed->items)) : ' . "\n" .
+            '$nb_feed_items = min(count(App::frontend()->context()->feed->items),' . $lastn . ');' . "\n" .
+            'for (App::frontend()->context()->feed_idx = 0; App::frontend()->context()->feed_idx < $nb_feed_items; App::frontend()->context()->feed_idx++) : ?>' . "\n" .
             $content . "\n" .
             '<?php endfor;' . "\n" .
-            'unset(dcCore::app()->ctx->feed_idx,$nb_feed_items); ' . "\n" .
+            'unset(App::frontend()->context()->feed_idx,$nb_feed_items); ' . "\n" .
             'endif; ?>' . "\n";
     }
 
@@ -145,7 +145,7 @@ class Frontend extends Process
     public static function FeedEntriesHeader($attr, $content)
     {
         return
-        "<?php if (\dcCore::app()->ctx->feed_idx == 0) : ?>" .
+        "<?php if (\App::frontend()->context()->feed_idx == 0) : ?>" .
         $content .
         '<?php endif; ?>';
     }
@@ -157,7 +157,7 @@ class Frontend extends Process
     public static function FeedEntriesFooter($attr, $content)
     {
         return
-        "<?php if (\dcCore::app()->ctx->feed_idx == ($nb_feed_items - 1)) : ?>" .
+        "<?php if (\App::frontend()->context()->feed_idx == ($nb_feed_items - 1)) : ?>" .
         $content .
         '<?php endif; ?>';
     }
@@ -176,16 +176,16 @@ class Frontend extends Process
     {
         $if = [];
 
-        $operator = isset($attr['operator']) ? dcCore::app()->tpl->getOperator($attr['operator']) : '&&' ;
+        $operator = isset($attr['operator']) ? App::frontend()->template()->getOperator($attr['operator']) : '&&' ;
 
         if (isset($attr['first'])) {
             $sign = (bool) $attr['first'] ? '=' : '!';
-            $if[] = 'dcCore::app()->ctx->feed_idx ' . $sign . '= 0';
+            $if[] = 'App::frontend()->context()->feed_idx ' . $sign . '= 0';
         }
 
         if (isset($attr['odd'])) {
             $sign = (bool) $attr['odd'] ? '=' : '!';
-            $if[] = '(dcCore::app()->ctx->feed_idx+1)%2 ' . $sign . '= 1';
+            $if[] = '(App::frontend()->context()->feed_idx+1)%2 ' . $sign . '= 1';
         }
 
         if (isset($attr['extended'])) {
@@ -210,7 +210,7 @@ class Frontend extends Process
         $ret = Html::escapeHTML($ret);
 
         return
-        '<?php if (dcCore::app()->ctx->feed_idx == 0) { ' .
+        '<?php if (App::frontend()->context()->feed_idx == 0) { ' .
         "echo '" . addslashes($ret) . "'; } ?>";
     }
 
@@ -224,7 +224,7 @@ class Frontend extends Process
         $ret = Html::escapeHTML($ret);
 
         return
-        '<?php if ((dcCore::app()->ctx->feed_idx+1)%2 == 1) { ' .
+        '<?php if ((App::frontend()->context()->feed_idx+1)%2 == 1) { ' .
         "echo '" . addslashes($ret) . "'; } ?>";
     }
 
@@ -234,9 +234,9 @@ class Frontend extends Process
      */
     public static function FeedEntryTitle($attr)
     {
-        $f = dcCore::app()->tpl->getFilters($attr);
+        $f = App::frontend()->template()->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->title') . '; ?>';
+        return '<?php echo ' . sprintf($f, 'App::frontend()->context()->feed->items[App::frontend()->context()->feed_idx]->title') . '; ?>';
     }
 
     /**
@@ -245,9 +245,9 @@ class Frontend extends Process
      */
     public static function FeedEntryURL($attr)
     {
-        $f = dcCore::app()->tpl->getFilters($attr);
+        $f = App::frontend()->template()->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->link') . '; ?>';
+        return '<?php echo ' . sprintf($f, 'App::frontend()->context()->feed->items[App::frontend()->context()->feed_idx]->link') . '; ?>';
     }
 
     /**
@@ -256,9 +256,9 @@ class Frontend extends Process
      */
     public static function FeedEntryAuthor($attr)
     {
-        $f = dcCore::app()->tpl->getFilters($attr);
+        $f = App::frontend()->template()->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->creator') . '; ?>';
+        return '<?php echo ' . sprintf($f, 'App::frontend()->context()->feed->items[App::frontend()->context()->feed_idx]->creator') . '; ?>';
     }
 
     /**
@@ -267,9 +267,9 @@ class Frontend extends Process
      */
     public static function FeedEntrySummary($attr)
     {
-        $f = dcCore::app()->tpl->getFilters($attr);
+        $f = App::frontend()->template()->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->description') . '; ?>';
+        return '<?php echo ' . sprintf($f, 'App::frontend()->context()->feed->items[App::frontend()->context()->feed_idx]->description') . '; ?>';
     }
 
     /**
@@ -278,7 +278,7 @@ class Frontend extends Process
      */
     public static function FeedEntryExcerpt($attr)
     {
-        $f = dcCore::app()->tpl->getFilters($attr);
+        $f = App::frontend()->template()->getFilters($attr);
 
         return '<?php echo ' . sprintf($f, self::class . '::getExcerpt()') . '; ?>';
     }
@@ -289,9 +289,9 @@ class Frontend extends Process
      */
     public static function FeedEntryContent($attr)
     {
-        $f = dcCore::app()->tpl->getFilters($attr);
+        $f = App::frontend()->template()->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->content') . '; ?>';
+        return '<?php echo ' . sprintf($f, 'App::frontend()->context()->feed->items[App::frontend()->context()->feed_idx]->content') . '; ?>';
     }
 
     /**
@@ -304,34 +304,34 @@ class Frontend extends Process
      */
     public static function FeedEntryPubdate($attr)
     {
-        $fmt = dcCore::app()->blog->settings->system->date_format;
+        $fmt = App::blog()->settings->system->date_format;
         if (!empty($attr['format'])) {
             $fmt = $attr['format'];
         }
-        $f = dcCore::app()->tpl->getFilters($attr);
+        $f = App::frontend()->template()->getFilters($attr);
 
-        return '<?php echo ' . sprintf($f, 'Dotclear\Helper\Date::str("' . $fmt . '",dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->TS,dcCore::app()->blog->settings->system->blog_timezone)') . '; ?>';
+        return '<?php echo ' . sprintf($f, 'Dotclear\Helper\Date::str("' . $fmt . '",App::frontend()->context()->feed->items[App::frontend()->context()->feed_idx]->TS,App::blog()->settings->system->blog_timezone)') . '; ?>';
     }
 
     public static function getExcerpt()
     {
-        if (!dcCore::app()->ctx->feed || is_null(dcCore::app()->ctx->feed_idx)) {
+        if (!App::frontend()->context()->feed || is_null(App::frontend()->context()->feed_idx)) {
             return;
         }
 
-        if (dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->description) {
-            return dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->description;
+        if (App::frontend()->context()->feed->items[App::frontend()->context()->feed_idx]->description) {
+            return App::frontend()->context()->feed->items[App::frontend()->context()->feed_idx]->description;
         }
 
-        return Html::clean(dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->content);
+        return Html::clean(App::frontend()->context()->feed->items[App::frontend()->context()->feed_idx]->content);
     }
 
     public static function isExtended()
     {
-        if (!dcCore::app()->ctx->feed || is_null(dcCore::app()->ctx->feed_idx)) {
+        if (!App::frontend()->context()->feed || is_null(App::frontend()->context()->feed_idx)) {
             return false;
         }
 
-        return (dcCore::app()->ctx->feed->items[dcCore::app()->ctx->feed_idx]->description != '');
+        return (App::frontend()->context()->feed->items[App::frontend()->context()->feed_idx]->description != '');
     }
 }
