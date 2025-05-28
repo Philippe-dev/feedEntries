@@ -74,7 +74,7 @@ class Frontend extends Process
         return
             '<?php' . "\n" .
             'App::frontend()->context()->feed = ' . Reader::class . '::quickParse("' . $attr['source'] . '",DC_TPL_CACHE); ' . "\n" .
-            'if (App::frontend()->context()->feed !== null) : ?>' . "\n" .
+            'if (App::frontend()->context()->feed) : ?>' . "\n" .
             $content . "\n" .
             '<?php unset(App::frontend()->context()->feed); ' . "\n" .
             'endif; ?>' . "\n";
@@ -129,7 +129,7 @@ class Frontend extends Process
 
         return
             '<?php' . "\n" .
-            'if (count(App::frontend()->context()->feed->items)) : ' . "\n" .
+            'if (App::frontend()->context()->feed && count(App::frontend()->context()->feed->items)) : ' . "\n" .
             '$nb_feed_items = min(count(App::frontend()->context()->feed->items),' . $lastn . ');' . "\n" .
             'for (App::frontend()->context()->feed_idx = 0; App::frontend()->context()->feed_idx < $nb_feed_items; App::frontend()->context()->feed_idx++) : ?>' . "\n" .
             $content . "\n" .
