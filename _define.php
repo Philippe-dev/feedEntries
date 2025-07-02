@@ -13,8 +13,9 @@ $this->registerModule(
     'feedEntries',
     'Integrate feed entries in your templates',
     'Pep',
-    '2.5',
+    '2.6',
     [
+        'date'        => '2025-07-02T00:00:13+0100',
         'requires'    => [['core', '2.26']],
         'permissions' => 'My',
         'type'    => 'plugin',
