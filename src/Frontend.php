@@ -15,13 +15,15 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\feedEntries;
 
 use Dotclear\App;
-use Dotclear\Core\Process;
+use Dotclear\Helper\Process\TraitProcess;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Network\Http;
 use Dotclear\Helper\Network\Feed\Reader;
 
-class Frontend extends Process
+class Frontend
 {
+    use TraitProcess;
+    
     public static function init(): bool
     {
         return self::status(My::checkContext(My::FRONTEND));
