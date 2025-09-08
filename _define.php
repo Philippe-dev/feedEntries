@@ -13,10 +13,10 @@ $this->registerModule(
     'feedEntries',
     'Integrate feed entries in your templates',
     'Pep',
-    '2.6',
+    '2.7',
     [
-        'date'        => '2025-07-02T00:00:13+0100',
-        'requires'    => [['core', '2.26']],
+        'date'        => '2025-09-08T00:00:08+0100',
+        'requires'    => [['core', '2.36']],
         'permissions' => 'My',
         'type'    => 'plugin',
         'support' => 'https://github.com/Philippe-dev/feedEntries',
