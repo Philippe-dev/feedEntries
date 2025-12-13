@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\feedEntries;
 
-
 use Dotclear\App;
 use Dotclear\Module\MyPlugin;
 
