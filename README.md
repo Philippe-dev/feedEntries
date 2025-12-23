@@ -6,4 +6,22 @@
 
 Ce petit plugin, sans interface d'administration et ne nécessitant aucune configuration particulière, fournit un jeu complet de balises pour intégrer un flux RSS ou Atom au sein d'un template.
 
-Forked from Pep's plugin: [feedEntries 1.0.2](https://plugins.dotaddict.org/dc2/details/feedEntries).
+## Les balises
+
+* &lt;tpl:Feed source="url"&gt;&lt;/tpl:Feed&gt;
+* {{tpl:FeedTitle}}
+* {{tpl:FeedURL}}
+* {{tpl:FeedDescription}}
+* &lt;tpl:FeedEntries lastn="nb"&gt;&lt;/tpl:FeedEntries&gt;
+* &lt;tpl:FeedEntriesHeader&gt;&lt;/tpl:FeedEntriesHeader&gt;
+* &lt;tpl:FeedEntriesFooter&gt;&lt;/tpl:FeedEntriesFooter&gt;
+* &lt;tpl:FeedEntryIf&gt;&lt;/tpl:FeedEntryIf&gt;
+* {{tpl:FeedEntryIfFirst}}
+* {{tpl:FeedEntryIfOdd}}
+* {{tpl:FeedEntryTitle}}
+* {{tpl:FeedEntryURL}}
+* {{tpl:FeedEntryAuthor}}
+* {{tpl:FeedEntrySummary}}
+* {{tpl:FeedEntryExcerpt}}
+* {{tpl:FeedEntryContent}}
+* {{tpl:FeedEntryPubdate}}
