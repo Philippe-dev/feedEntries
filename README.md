@@ -25,3 +25,21 @@ Ce petit plugin, sans interface d'administration et ne nécessitant aucune confi
 * {{tpl:FeedEntryExcerpt}}
 * {{tpl:FeedEntryContent}}
 * {{tpl:FeedEntryPubdate}}
+
+## Exemple
+
+```language-xml
+<h3><a href="https://dotclear.org/actualites">Actualités</a></h3>
+<tpl:Feed source="https://dotclear.org/feed/category/Actualités/atom">
+  <ul>
+    <tpl:FeedEntries lastn="5">
+      <li><a href="{{tpl:FeedEntryURL}}">{{tpl:FeedEntryTitle encode_html="1"}}</a>
+        <ul>
+          <li>publié le {{tpl:FeedEntryPubdate}}</li>
+          <li>par {{tpl:FeedEntryAuthor}}</li>
+        </ul>
+      </li>
+    </tpl:FeedEntries>
+  </ul>
+</tpl:Feed>
+```
