@@ -8,14 +8,14 @@ Ce petit plugin, sans interface d'administration et ne nécessitant aucune confi
 
 ## Les balises
 
-* &lt;tpl:Feed source="url"&gt;&lt;/tpl:Feed&gt;
+* <tpl:Feed source=”url”></tpl:Feed>
 * {{tpl:FeedTitle}}
 * {{tpl:FeedURL}}
 * {{tpl:FeedDescription}}
-* &lt;tpl:FeedEntries lastn="nb"&gt;&lt;/tpl:FeedEntries&gt;
-* &lt;tpl:FeedEntriesHeader&gt;&lt;/tpl:FeedEntriesHeader&gt;
-* &lt;tpl:FeedEntriesFooter&gt;&lt;/tpl:FeedEntriesFooter&gt;
-* &lt;tpl:FeedEntryIf&gt;&lt;/tpl:FeedEntryIf&gt;
+* <tpl:FeedEntries lastn=”nb”></tpl:FeedEntries>
+* <tpl:FeedEntriesHeader></tpl:FeedEntriesHeader>
+* <tpl:FeedEntriesFooter></tpl:FeedEntriesFooter>
+* <tpl:FeedEntryIf></tpl:FeedEntryIf>
 * {{tpl:FeedEntryIfFirst}}
 * {{tpl:FeedEntryIfOdd}}
 * {{tpl:FeedEntryTitle}}
