@@ -12,10 +12,10 @@ Nécessite le plugin Template Helper.
 
 ## Les balises
 
-* <tpl:Feed source=”url”></tpl:Feed>
-* <tpl:FeedEntries lastn=”nb”></tpl:FeedEntries>
-* <tpl:FeedEntriesHeader></tpl:FeedEntriesHeader>
-* <tpl:FeedEntriesFooter></tpl:FeedEntriesFooter>
+* &lt;tpl:Feed source=”url”&gt;&lt;/tpl:Feed&gt;
+* &lt;tpl:FeedEntries lastn=”nb”&gt;&lt;/tpl:FeedEntries&gt;
+* &lt;tpl:FeedEntriesHeader&gt;&lt;/tpl:FeedEntriesHeader&gt;
+* &lt;tpl:FeedEntriesFooter&gt;&lt;/tpl:FeedEntriesFooter&gt;
 * {{tpl:FeedEntryTitle}}
 * {{tpl:FeedEntryURL}}
 * {{tpl:FeedEntryAuthor}}
