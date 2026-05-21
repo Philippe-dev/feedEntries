@@ -4,7 +4,7 @@
 ![License AGPL 3.0](https://img.shields.io/badge/License-AGPL_3.0-a5cc52)
 ![Dotclear 2.36](https://img.shields.io/badge/Dotclear-2.36-137bbb)
 
-Ce plugin fournit un jeu de balises pour intégrer un flux RSS ou Atom au sein d'un template.
+Ce plugin fournit un jeu de balises pour intégrer un flux RSS ou Atom au sein d'un gabarit.
 
 ## Pré-requis
 
